@@ -1,0 +1,22 @@
+
+<div class="container">
+<h1 class="dipslay-4">Spent register</h1>
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+    <input type="hidden" name="id" #id="ngModel" [(ngModel)]="service.formData.id" >
+    <div class="form-group">
+        <input #name="ngModel" [(ngModel)]="service.formData.name" class="form-control" placeholder="Spent Name" name="name" required>
+        <div *ngIf="name.invalid && name.touched" class="validation-error">This field is required </div>
+    </div>
+    <div class="form-group">
+        <input type="number" #price="ngModel" [(ngModel)]="service.formData.price" class="form-control" placeholder="Price" name="price" >
+    </div>
+    <div class="form-group">
+        <input matInput [matDatepicker]="picker" #date="ngModel" [(ngModel)]="service.formData.date"  class="form-control" placeholder="Choose a date" name="date" >
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </div>
+    <div class='form-group'>
+        <button type="submit" [disabled]="form.invalid" class="btn btn-lg btn-block btn-info">Valider</button>
+    </div>
+    </form>
+</div>

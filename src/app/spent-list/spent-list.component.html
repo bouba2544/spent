@@ -1,0 +1,26 @@
+
+<div class="container">
+<table class="table table-hover">
+    <thead>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Date</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let sp of list">
+            <td (click)="onEdit(sp)">{{sp.name}}</td>
+            <td (click)="onEdit(sp)">{{sp.price}}
+            <td (click)="onEdit(sp)">{{sp.date.seconds * 1000  | date:'MM-dd-yyyy'}}</td>
+            <td><a class="btn text-danger" (click)="onDelete(sp.id)"><i class="fa fa-trash"></i></a></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<div class="container">
+    <table *ngIf="varia">
+     <tr>
+         <td>{{varia.quotes.USDAED}}</td>
+     </tr>
+    </table>
+</div>
