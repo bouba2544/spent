@@ -1,22 +1,51 @@
 
 <div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-body">
+
 <h1 class="dipslay-4">Spent register</h1>
-<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
-    <input type="hidden" name="id" #id="ngModel" [(ngModel)]="service.formData.id" >
-    <div class="form-group">
-        <input #name="ngModel" [(ngModel)]="service.formData.name" class="form-control" placeholder="Spent Name" name="name" required>
-        <div *ngIf="name.invalid && name.touched" class="validation-error">This field is required </div>
+<form #form='ngForm' [formGroup]="spentForm" autocomplete="off" (submit)="onSubmit(spentForm)">
+
+        <div class="form-group" >
+            <input class="form-control" for="purchasedOn" name="purchasedOn" [(ngModel)]="service.formDataSpent.purchasedOn" type="date" formControlName="purchasedOn" placeholder="purchasedOn">
+        </div>
+
+    <div class="form-group ">
+        <input   class="form-control" [(ngModel)]="service.formDataSpent.nature" formControlName="nature" placeholder="Nature" name="nature" required>
     </div>
-    <div class="form-group">
-        <input type="number" #price="ngModel" [(ngModel)]="service.formData.price" class="form-control" placeholder="Price" name="price" >
+    <div class="form-group ">
+        <input class="form-control" [(ngModel)]="service.formDataSpent.comment" formControlName="comment" placeholder="Comment" name="comment" required>
     </div>
-    <div class="form-group">
-        <input matInput [matDatepicker]="picker" #date="ngModel" [(ngModel)]="service.formData.date"  class="form-control" placeholder="Choose a date" name="date" >
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </div>
+
+
+        <div  [formGroup]="spentFormOrigin" class="ten" >
+            <div class="form-group " >
+                <input  type="number"  class="form-control" [(ngModel)]="service.formDataOrigin.amount" formControlName="amount" placeholder="Amount origin" name="amount" min="0" required>
+            </div>
+            <div class="form-group " >
+                <select value="EUR" size="1" class="form-control" [(ngModel)]="currencyDefault" formControlName="currency"  placeholder="Currency origin" name="currency" required>
+                    <OPTION  value="EUR" selected>EUR</OPTION>
+                    <OPTION>GBP</OPTION>
+                    <OPTION>CHF</OPTION>
+                    <OPTION>USD</OPTION>
+                    </select>
+            </div>
+        </div>
+
+        <div  [formGroup]="spentFormConvert" class="ten">
+            <div class="form-group " form-group>
+                <input type="number" value="EUR" class="form-control" [(ngModel)]="service.formDataConvert.amount" formControlName="amount" placeholder="Amount convert" name="amount" min="0" required>
+            </div>
+            <div class="form-group ">
+                <input   class="form-control" [(ngModel)]="currencyConvert" formControlName="currency"  placeholder="Currency convert" name="currency" value={property} disabled>
+            </div>
+        </div>
+
+
     <div class='form-group'>
-        <button type="submit" [disabled]="form.invalid" class="btn btn-lg btn-block btn-info">Valider</button>
+        <button type="submit" [disabled]="spentForm.invalid" class="btn btn-lg btn-block btn-info">Validate</button>
     </div>
     </form>
+    </div>
+</div>
 </div>

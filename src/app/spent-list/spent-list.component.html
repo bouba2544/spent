@@ -1,26 +1,33 @@
 
 <div class="container">
+<h1>Click on spent to update it</h1>
 <table class="table table-hover">
     <thead>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Date</th>
+        <th>PurshaseOn</th>
+        <th>Nature</th>
+        <th>Comment</th>
+        <th>Original amount</th>
+        <th>Original currency</th>
+        <th>Convert amount</th>
+        <th>Convert currency</th>
     </thead>
-    <tbody>
-        <tr *ngFor="let sp of list">
-            <td (click)="onEdit(sp)">{{sp.name}}</td>
-            <td (click)="onEdit(sp)">{{sp.price}}
-            <td (click)="onEdit(sp)">{{sp.date.seconds * 1000  | date:'MM-dd-yyyy'}}</td>
-            <td><a class="btn text-danger" (click)="onDelete(sp.id)"><i class="fa fa-trash"></i></a></td>
+        <tr *ngFor="let s of list | paginate: { itemsPerPage: 10, currentPage: p }">
+            <td (click)="onEdit(s)">{{s.purchasedOn | date:'MM/dd/yyyy'}}</td>
+            <td (click)="onEdit(s)">{{s.nature}}</td>
+            <td (click)="onEdit(s)">{{s.comment}}</td>
+            <td (click)="onEdit(s)">{{s.originalAmount.amount}}</td>
+            <td (click)="onEdit(s)">{{s.originalAmount.currency}}</td>
+            <td (click)="onEdit(s)">{{s.convertedAmount.amount}}</td>
+            <td (click)="onEdit(s)">{{s.convertedAmount.currency}}</td>
+
+            <td><a class="btn text-danger" (click)="onDelete(s.id)"><i class="fa fa-trash"></i></a></td>
         </tr>
-    </tbody>
 </table>
+<!--<pagination-controls (pageChange)="p = $event"></pagination-controls>!-->
+
 </div>
 
-<div class="container">
-    <table *ngIf="varia">
-     <tr>
-         <td>{{varia.quotes.USDAED}}</td>
-     </tr>
-    </table>
-</div>
+
+{{errorMessage}}
+
+

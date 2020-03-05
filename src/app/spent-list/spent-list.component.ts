@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SpentService } from '../shared/spent.service';
 import { Spent } from '../shared/spent';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { HttpClient } from '@angular/common/http';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-spent-list',
@@ -10,28 +11,42 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class SpentListComponent implements OnInit {
   list: Spent[];
-  varia;
-  tes;
-  constructor(private service : SpentService, private firesotre: AngularFirestore ) { }
+  errorMessage: string;
+  update:BehaviorSubject<boolean>;
+  tes:any
+  p: number = 1;
+  collection = [];
+
+  constructor(private service : SpentService,private httpClient:HttpClient) { 
+
+  
+}
 
   ngOnInit(){
-    this.service.getSpents().subscribe(data =>{
-      this.list = data.map( e => {
-        return {   
-            id: e.payload.doc.id ,
-           ...e.payload.doc.data() as Spent
-        } 
-      })
+    this.service.refreshList();
+    this.service.getSpent().subscribe((data:any)=>{this.list=data.items})
+    this.service.getConvert().subscribe(dat=>{
+      this.tes=dat
+      console.log(this.tes,"le retour de convert")
     });
 
-    
   }
+
+  onDelete(id:string){
+    this.service.deletSpent(id).subscribe(data=>{
+      this.service.getSpent();
+    },err=>{
+      console.log(err)
+    });
+
+      this.service.refreshList()
+      
+    
+    }
   onEdit(sp:Spent){
-    this.service.formData=Object.assign({},sp);
+    this.service.formDataSpent=Object.assign({},sp);
+    this.service.formDataOrigin=Object.assign({},sp.originalAmount);
+    this.service.formDataConvert=Object.assign({},sp.convertedAmount);
     }
-    onDelete(id:string){
-      if(confirm("est vous sure de bien vouloir supprimer ?" )){
-        this.firesotre.doc('spents/'+id).delete();
-      }
-    }
+  
 }

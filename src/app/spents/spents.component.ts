@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SpentService } from '../shared/spent.service';
-import { NgForm } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Spent } from '../shared/spent';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-spents',
@@ -10,38 +8,72 @@ import { Spent } from '../shared/spent';
   styleUrls: ['./spents.component.css']
 })
 export class SpentsComponent implements OnInit {
-
-  constructor(public service: SpentService, private firesotre: AngularFirestore) { }
-
+  currencyDefault = 'EUR';
+  currencyConvert ='EUR'
+  spentForm:FormGroup;
+  spentFormOrigin:FormGroup;
+  spentFormConvert:FormGroup;
+  
+  constructor(public service: SpentService) { }
+ 
+  
   ngOnInit(): void {
-    this.resetForm();
+   this.resetForm();
+  this.spentForm=new FormGroup({
+    purchasedOn:new FormControl(),
+    nature:new FormControl(),
+    comment:new FormControl(),
+    originalAmount:this.spentFormOrigin=new FormGroup({
+      amount:new FormControl(),
+      currency:new FormControl(),
+    }),
+    convertedAmount:this.spentFormConvert=new FormGroup({
+      amount:new FormControl(),
+      currency:new FormControl()
+    })
+  })
+ 
   }
   onGetSpent(){
     console.log('test');
   }
-  resetForm (form?:NgForm){
+  resetForm (form?:any){
     if(form!=null)
     form.resetForm();
-    this.service.formData={
-      id:null,
-      name:'',
-      price:null,
-      date:null
+    this.service.formDataSpent={
+    id:'',
+    purchasedOn:null,
+    nature:null,
+    comment:null,
+    originalAmount:this.service.formDataOrigin={
+      amount:null,
+      currency:null},
+      convertedAmount:this.service.formDataConvert={
+      amount:null,
+      currency:null
+    }}
+  }
+  
+
+
+  onSubmit(form:any){
+        let data = Object.assign({},form.value);
+        console.log(this.service.formDataSpent.id,"id avant supp")
+
+        if(this.service.formDataSpent.id!==''){
+          this.service.updateSpent(this.service.formDataSpent.id, data).subscribe()
+        }
+        else
+        {
+          this.insertSpent(form);
+            console.log(form.value,"id de lemement modifié")
+        }
+  }
+
+  insertSpent(form:any){
+    console.log(form,'contenu formulaire form')
+     this.service.addSpent(form.value).subscribe();      
     }
-  }
-  onSubmit(form:NgForm){
-    let data = Object.assign({},form.value);
-    delete data.id;
-    if(form.value.id==null){
-    this.firesotre.collection('spents').add(data);
 
-  }
-    else
-    
-    this.firesotre.doc('spents/' + form.value.id).update(data);
-    this.resetForm(form);
-
-  }
-
-  }
+}
 
