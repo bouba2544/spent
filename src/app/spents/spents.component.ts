@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SpentService } from '../shared/spent.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-spents',
@@ -14,7 +15,7 @@ export class SpentsComponent implements OnInit {
   spentFormOrigin:FormGroup;
   spentFormConvert:FormGroup;
   
-  constructor(public service: SpentService) { }
+  constructor(public service: SpentService, public router:Router) { }
  
   
   ngOnInit(): void {
@@ -62,17 +63,21 @@ export class SpentsComponent implements OnInit {
 
         if(this.service.formDataSpent.id!==''){
           this.service.updateSpent(this.service.formDataSpent.id, data).subscribe()
+          window.location.reload();
+          console.log(form.value,"element modifié")
         }
         else
         {
           this.insertSpent(form);
-            console.log(form.value,"id de lemement modifié")
+            console.log(form.value,"element ajouté")
         }
   }
-
+latest:any
   insertSpent(form:any){
     console.log(form,'contenu formulaire form')
-     this.service.addSpent(form.value).subscribe();      
+     this.service.addSpent(form.value).subscribe()
+     window.location.reload();
+           
     }
 
 }

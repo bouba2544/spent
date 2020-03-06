@@ -23,7 +23,8 @@ export class SpentListComponent implements OnInit {
 }
 
   ngOnInit(){
-    this.service.refreshList();
+    this.fetchData();
+    this.fetchData();
     this.service.getSpent().subscribe((data:any)=>{this.list=data.items})
     this.service.getConvert().subscribe(dat=>{
       this.tes=dat
@@ -34,12 +35,14 @@ export class SpentListComponent implements OnInit {
 
   onDelete(id:string){
     this.service.deletSpent(id).subscribe(data=>{
-      this.service.getSpent();
+      this.service.getSpent().subscribe();
+      window.location.reload();
+      console.log('liste mise a jour apres suppression')
     },err=>{
       console.log(err)
     });
 
-      this.service.refreshList()
+      this.fetchData();
       
     
     }
@@ -48,5 +51,10 @@ export class SpentListComponent implements OnInit {
     this.service.formDataOrigin=Object.assign({},sp.originalAmount);
     this.service.formDataConvert=Object.assign({},sp.convertedAmount);
     }
-  
+    data:any
+    fetchData() {
+       this.service.getSpent().subscribe(data =>{
+          this.data = data;
+      });
+    }
 }

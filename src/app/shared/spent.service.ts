@@ -68,13 +68,13 @@ updateSpent(id:any, data:Spent){
 deletSpent(id:string):Observable<Spent>{
   if(confirm("est vous sure de bien vouloir supprimer ?" )){
     return this.httpClient.delete<Spent>(this.apiUrl +'/'+id  ,this.httpOptions)
+
   }
-}
-
-refreshList(){
-  this.httpClient.get(this.apiUrl, this.httpOptions)
 
 }
+
+
+
 /*
  taskkill /F /IM chrome.exe
 
