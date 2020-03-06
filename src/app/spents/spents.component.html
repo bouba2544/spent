@@ -4,7 +4,7 @@
         <div class="panel-body">
 
 <h1 class="dipslay-4">Spent register</h1>
-<form #form='ngForm' [formGroup]="spentForm" autocomplete="off" (submit)="onSubmit(spentForm)">
+<form  [formGroup]="spentForm" autocomplete="off" (submit)="onSubmit(spentForm)">
 
         <div class="form-group" >
             <input class="form-control" for="purchasedOn" name="purchasedOn" [(ngModel)]="service.formDataSpent.purchasedOn" type="date" formControlName="purchasedOn" placeholder="purchasedOn">

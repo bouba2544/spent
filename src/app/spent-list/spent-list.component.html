@@ -12,7 +12,7 @@
         <th>Convert currency</th>
     </thead>
         <tr *ngFor="let s of list | paginate: { itemsPerPage: 10, currentPage: p }">
-            <td (click)="onEdit(s)">{{s.purchasedOn | date:'MM/dd/yyyy'}}</td>
+            <td (click)="onEdit(s)">{{s.purchasedOn | date:'dd/MM/yyyy'}}</td>
             <td (click)="onEdit(s)">{{s.nature}}</td>
             <td (click)="onEdit(s)">{{s.comment}}</td>
             <td (click)="onEdit(s)">{{s.originalAmount.amount}}</td>
