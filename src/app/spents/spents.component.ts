@@ -1,12 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SpentService } from '../shared/spent.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-spents',
   templateUrl: './spents.component.html',
-  styleUrls: ['./spents.component.css']
+  styleUrls: ['./spents.component.css'],
+
 })
 export class SpentsComponent implements OnInit {
   currencyDefault = 'EUR';
@@ -14,11 +14,15 @@ export class SpentsComponent implements OnInit {
   spentForm:FormGroup;
   spentFormOrigin:FormGroup;
   spentFormConvert:FormGroup;
-  
-  constructor(public service: SpentService, public router:Router) { }
+  currentDate = new Date();
  
+  constructor(public service: SpentService, public router:Router) {
+  
+   }
+
   
   ngOnInit(): void {
+    console.log(this.currentDate,"la date du jour")
    this.resetForm();
   this.spentForm=new FormGroup({
     purchasedOn:new FormControl(),

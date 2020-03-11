@@ -7,11 +7,11 @@
 <form  [formGroup]="spentForm" autocomplete="off" (submit)="onSubmit(spentForm)">
 
         <div class="form-group" >
-            <input class="form-control" for="purchasedOn" name="purchasedOn" [(ngModel)]="service.formDataSpent.purchasedOn" type="date" formControlName="purchasedOn" placeholder="purchasedOn">
+            <input class="form-control" for="purchasedOn" name="purchasedOn" [(ngModel)]="service.formDataSpent.purchasedOn" type="date" min="2020-01-01" max="{{currentDate | date:'yyyy-MM-dd'}}" formControlName="purchasedOn" placeholder="purchasedOn">
         </div>
 
     <div class="form-group ">
-        <input   class="form-control" [(ngModel)]="service.formDataSpent.nature" formControlName="nature" placeholder="Nature" name="nature" required>
+        <input #nature  class="form-control" [(ngModel)]="service.formDataSpent.nature" formControlName="nature" placeholder="Nature" name="nature" required>
     </div>
     <div class="form-group ">
         <input class="form-control" [(ngModel)]="service.formDataSpent.comment" formControlName="comment" placeholder="Comment" name="comment" required>
