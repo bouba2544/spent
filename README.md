@@ -1,3 +1,14 @@
+# Launch of the application
+
+In order to launch the application with Chrome it is necessary to run the shell command as an administrator
+and execute the following two commands:
+
+taskkill /F /IM chrome.exe
+
+start chrome https://teckangaroo.com/chrome-disable-web-security/ –disable-web-security –user-data-dir=”C:\teckangaroo.com”
+
+
+
 # Vacance
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.2.
